@@ -1,9 +1,8 @@
 package com.jwt.jwt.controllers;
 
-import com.jwt.jwt.DTOs.ProdutoDTO;
+import com.jwt.jwt.DTOs.ProdutoDto;
 import com.jwt.jwt.entities.Produto;
 import com.jwt.jwt.repositories.ProdutoRepository;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,7 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<Produto> criarProduto( @RequestBody ProdutoDTO produtoDTO) {
+    public ResponseEntity<Produto> criarProduto( @RequestBody ProdutoDto produtoDTO) {
         Produto produto = new Produto();
         produto.setNome(produtoDTO.nome());
         produto.setDescricao(produtoDTO.descricao());
@@ -39,7 +38,7 @@ public class ProdutoController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Produto> atualizarProduto(@PathVariable Long id,  @RequestBody ProdutoDTO produtoDTO) {
+    public ResponseEntity<Produto> atualizarProduto(@PathVariable Long id,  @RequestBody ProdutoDto produtoDTO) {
         return produtoRepository.findById(id)
                 .map(produto -> {
                     produto.setNome(produtoDTO.nome());

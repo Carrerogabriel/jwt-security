@@ -1,10 +1,9 @@
 package com.jwt.jwt.controllers;
 
-import com.jwt.jwt.DTOs.AuthenticationDTO;
-import com.jwt.jwt.DTOs.LoginResponseDTO;
+import com.jwt.jwt.DTOs.AuthenticationDto;
+import com.jwt.jwt.DTOs.LoginResponseDto;
 import com.jwt.jwt.entities.Usuario;
 import com.jwt.jwt.services.TokenService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,11 +23,11 @@ public class AuthenticationController {
     TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity login( @RequestBody AuthenticationDTO authenticationDTO) {
+    public ResponseEntity login( @RequestBody AuthenticationDto authenticationDTO) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(authenticationDTO.login(), authenticationDTO.senha());
         var auth = this.authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((Usuario) auth.getPrincipal());
 
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        return ResponseEntity.ok(new LoginResponseDto(token));
     }
 }

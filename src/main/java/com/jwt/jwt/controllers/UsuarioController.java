@@ -1,10 +1,9 @@
 package com.jwt.jwt.controllers;
 
-import com.jwt.jwt.DTOs.UsuarioDTO;
-import com.jwt.jwt.DTOs.UsuarioResponseDTO;
+import com.jwt.jwt.DTOs.UsuarioDto;
+import com.jwt.jwt.DTOs.UsuarioResponseDto;
 import com.jwt.jwt.entities.Usuario;
 import com.jwt.jwt.repositories.UsuarioRepository;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,11 +18,11 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepository;
 
     @GetMapping
-    public ResponseEntity<List<UsuarioResponseDTO>> listarUsuarios() {
+    public ResponseEntity<List<UsuarioResponseDto>> listarUsuarios() {
         List<Usuario> usuarios = usuarioRepository.findAll();
 
-        List<UsuarioResponseDTO> responseList = usuarios.stream()
-                .map(usuario -> new UsuarioResponseDTO(
+        List<UsuarioResponseDto> responseList = usuarios.stream()
+                .map(usuario -> new UsuarioResponseDto(
                         usuario.getLogin(),
                         usuario.getRole()
                 ))
@@ -33,7 +32,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioResponseDTO> criarUsuario( @RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<UsuarioResponseDto> criarUsuario(@RequestBody UsuarioDto usuarioDTO) {
 
         if(this.usuarioRepository.findByLogin(usuarioDTO.login()) != null) return ResponseEntity.status(400).build();
 
@@ -47,7 +46,7 @@ public class UsuarioController {
         try {
             Usuario novoUsuario = usuarioRepository.save(usuario);
 
-            var responseDTO = new UsuarioResponseDTO(
+            var responseDTO = new UsuarioResponseDto(
                     novoUsuario.getLogin(),
                     novoUsuario.getRole()
             );
@@ -59,11 +58,11 @@ public class UsuarioController {
     }
 
     @GetMapping("/{login}")
-    public ResponseEntity<UsuarioResponseDTO> listarPorLogin(@PathVariable String login) {
+    public ResponseEntity<UsuarioResponseDto> listarPorLogin(@PathVariable String login) {
         Usuario usuario = usuarioRepository.findByLogin(login);
 
         if (usuario != null) {
-            var responseDTO = new UsuarioResponseDTO(
+            var responseDTO = new UsuarioResponseDto(
                     usuario.getLogin(),
                     usuario.getRole()
             );

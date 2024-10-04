@@ -1,4 +1,4 @@
-package com.jwt.jwt.configuration;
+package com.jwt.jwt.config;
 
 import com.jwt.jwt.repositories.UsuarioRepository;
 import com.jwt.jwt.services.TokenService;

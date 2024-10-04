@@ -29,7 +29,7 @@ public class TokenService {
 
             return token;
         } catch (JWTCreationException exception) {
-            throw new RuntimeException("Erro ao gerar a chave", exception);
+            throw new RuntimeException("Erro ao criar   a chave", exception);
         }
     }
 
